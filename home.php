@@ -15,7 +15,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
-  <link rel="stylesheet" href="style/style.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -50,14 +49,16 @@
 </a>
   </div>
 </nav>
-<div class="flex justify-center items-center h-[900px]">
-    <div class="rounded-lg shadow-lg px-[100px] py-[90px] bg-white">
-      <h2 class="text-[30px] font-bold text-center mb-3">Post</h2>
-<form action="create_post.php" method="post" class="w-[1000px]">
+
+
+<div class="flex justify-center items-center h-[900px] gap-2">
+    <div class="rounded-lg shadow-lg h-[90%] w-[50%] p-[50px] bg-white">
+      <h2 class="text-[30px] font-bold text-center mb-3">Blog Post</h2>
+<form action="create_post.php" method="post" >
 
 <div class="relative z-0 w-full mb-6 group">
       <input type="text" name="post" id="post" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label for="username" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Post Message</label>
+      <label for="username" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Blog Message</label>
   </div>
 
   <button type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
@@ -75,8 +76,16 @@
     while($row = $result->fetch_assoc()) {
       echo "<li class='shadow-lg rounded-lg border p-[50px] text-center text-[25px]'>". $row['post']."<br> 
       <div class='mt-[20px]'>
-      <a href='post_editor.php?pid=".$row['id']."' class='border px-[20px] py-[5px] rounded-lg'>Edit</a>
-      <a href='delete_post.php?pid=".$row['id']."' class='border px-[10px] py-[5px] rounded-lg'>Delete</a>
+      <a href='post_editor.php?pid=".$row['id']."'><button class='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800'>
+      <span class='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
+          Edit
+      </span>
+    </button></a>
+      <a href='delete_post.php?pid=".$row['id']."'><button class='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800'>
+      <span class='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
+          Delete
+      </span>
+    </button></a>
       </div>
       </li>";
     }
@@ -85,6 +94,48 @@
 ?>
 </ul>
     </div>
+    <div class="rounded-lg shadow-lg  w-[50%] h-[90%] p-[50px] bg-white">
+      <h2 class="text-[30px] font-bold text-center mb-3">Products</h2>
+      <a href="add_product.php">
+      <button type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+  <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+      Add Product
+  </span>
+</button>
+</a>
+<div class="grid grid-cols-3 gap-2">
+<?php
+  $sql = "SELECT * FROM products";
+  $result = $conn->query($sql);
+
+  if($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+      echo "<div class='shadow-lg rounded-lg border p-[50px] text-center text-[25px]'>
+      <img src=".$row['product_image']."/>
+      <p class='text-left'>".$row['product_name']."</p>
+      <p class='text-left'>₱".$row['product_price']."</p>
+      <p class='text-left'>".$row['product_description']."</p>
+      <br> 
+
+      <div class='mt-[20px]'>
+      <a href='edit_product.php?pid=".$row['id']."'><button class='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800'>
+      <span class='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
+          Edit
+      </span>
+    </button></a>
+      <a href='delete_product.php?pid=".$row['id']."'><button class='relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800'>
+      <span class='relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
+          Delete
+      </span>
+    </button></a>
+      </div>
+      </div>";
+    }
+  }
+
+?>
+</div>
+      </div>
 </div>
 </body>
 </html>

@@ -10,6 +10,7 @@
 <div class="flex justify-center items-center h-[900px]">
     <div class="rounded-lg shadow-lg px-[100px] py-[90px] bg-white">
       <h2 class="text-[30px] font-bold text-center mb-3">REGISTER</h2>
+      
     <form action="validate.php?m=register" method="post" class="flex flex-col gap-2 w-[400px]">
       
     <div class="relative z-0 w-full mb-6 group">
